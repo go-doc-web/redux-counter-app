@@ -1,7 +1,12 @@
-import { createStore } from "./createStore";
+import { createStore } from "redux";
+import thunk from "redux-thunk";
+
+// import { createStore } from "./createStore";
 import { rootReduser } from "./Redux/rootReducer";
+import { INCREMENT, DECREMENT } from "./redux/constants";
 
 import "./styles.css";
+import { decrement, increment } from "./Redux/actions";
 
 const counter = document.getElementById("counter");
 const addBtn = document.getElementById("add");
@@ -16,16 +21,16 @@ const store = createStore(rootReduser, 0);
 // };
 
 const handleIncrement = () => {
-  store.dispatch({ type: "INCREMENT" });
+  store.dispatch(increment());
 };
 
 const handleDecriment = () => {
-  store.dispatch({ type: "DECREMENT" });
+  store.dispatch(decrement());
 };
 
 const handleAsync = () => {
   setTimeout(() => {
-    store.dispatch({ type: "INCREMENT" });
+    store.dispatch(increment());
   }, 1500);
 };
 
