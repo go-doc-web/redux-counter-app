@@ -1,12 +1,17 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 // import { createStore } from "./createStore";
 import { rootReduser } from "./Redux/rootReducer";
-import { INCREMENT, DECREMENT } from "./redux/constants";
+import {
+  INCREMENT,
+  DECREMENT,
+  ASYNC_INCREMENT,
+  INIT_RELOAD,
+} from "./redux/constants";
 
 import "./styles.css";
-import { decrement, increment } from "./Redux/actions";
+import { decrement, increment, asyncIncrement } from "./Redux/actions";
 
 const counter = document.getElementById("counter");
 const addBtn = document.getElementById("add");
@@ -14,7 +19,8 @@ const subBtn = document.getElementById("sub");
 const asyncBtn = document.getElementById("async");
 const themeBtn = document.getElementById("theme");
 
-const store = createStore(rootReduser, 0);
+// const store = createStore(rootReduser, 0);
+const store = createStore(rootReduser, 0, applyMiddleware(thunk));
 
 // const render = () => {
 //   counter.innerHTML = store.getState();
@@ -29,9 +35,8 @@ const handleDecriment = () => {
 };
 
 const handleAsync = () => {
-  setTimeout(() => {
-    store.dispatch(increment());
-  }, 1500);
+  store.dispatch({ type: "INIT_APPLICAITION" });
+  store.dispatch(asyncIncrement());
 };
 
 const handleTheme = () => {
